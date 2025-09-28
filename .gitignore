@@ -1,30 +1,47 @@
-# Ambiente virtual Python
-.venv/
-venv/
-ENV/
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
 
-# Buildozer e compilações
+# --- Virtual env ---
+.venv/
+env/
+venv/
+
+# --- Buildozer ---
 .buildozer/
 bin/
 *.apk
 *.aab
 
-# Arquivos temporários / cache
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-*.log
-*.db-journal
-*.sqlite3-journal
+# --- Banco de dados ---
+*.db
 
-# Arquivos do sistema
+# --- Arquivos temporários ---
+*.log
+*.tmp
+*.swp
+*.swo
+*.bak
+
+# --- Cache ---
+*.cache/
+*.pytest_cache/
+*.mypy_cache/
+*.coverage
+.coverage.*
+
+# --- Excel export/import ---
+*.xlsx
+*.xls
+
+# --- IDEs ---
+.vscode/
+.idea/
+
+# --- Sistema ---
 .DS_Store
 Thumbs.db
-
-# Exportações (Excel ou outros gerados pelo app)
-*.xlsx
-
-# Configurações locais
-*.env
 
