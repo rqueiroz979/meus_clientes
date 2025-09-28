@@ -1,0 +1,216 @@
+#:import dp kivy.metrics.dp
+
+<LoginScreen>:
+    GradientBackground:
+        orientation: "vertical"
+        padding: dp(24)
+        spacing: dp(12)
+
+        Image:
+            source: "assets/logo.png"
+            size_hint_y: None
+            height: dp(140)
+
+        Label:
+            text: "Meus Clientes"
+            font_size: dp(22)
+            color: 1, 1, 1, 1
+            size_hint_y: None
+            height: dp(40)
+
+        StyledInput:
+            id: email
+            hint_text: "Usuário (admin)"
+
+        StyledInput:
+            id: password
+            hint_text: "Senha"
+            password: True
+
+        Label:
+            text: root.info
+            color: 1,0.3,0.3,1
+            size_hint_y: None
+            height: dp(20)
+
+        StyledButton:
+            text: "Entrar"
+            on_release: root.do_login()
+
+        StyledButton:
+            text: "Sair"
+            background_color: 0.8,0.2,0.2,1
+            on_release: app.stop()
+
+
+<HomeScreen>:
+    GradientBackground:
+        orientation: "vertical"
+        padding: dp(24)
+        spacing: dp(12)
+
+        Label:
+            text: "Painel Principal"
+            font_size: dp(20)
+            color: 1, 1, 1, 1
+            size_hint_y: None
+            height: dp(40)
+
+        StyledButton:
+            text: "Cadastrar Cliente"
+            on_release: app.root.current = "cadastro"
+
+        StyledButton:
+            text: "Listar Clientes"
+            on_release: app.root.current = "lista"
+
+        StyledButton:
+            text: "Exportar/Importar Excel"
+            on_release: app.root.current = "import_export"
+
+        StyledButton:
+            text: "Sair"
+            background_color: 0.8,0.2,0.2,1
+            on_release: app.root.current = "login"
+
+
+<CadastroScreen>:
+    GradientBackground:
+        orientation: "vertical"
+        padding: dp(24)
+        spacing: dp(8)
+
+        ScrollView:
+            GridLayout:
+                id: form
+                cols: 1
+                size_hint_y: None
+                height: self.minimum_height
+                spacing: dp(8)
+
+                Label:
+                    text: "Cadastro de Cliente"
+                    font_size: dp(20)
+                    color: 1, 1, 1, 1
+                    size_hint_y: None
+                    height: dp(40)
+
+                StyledInput:
+                    id: cnpj
+                    hint_text: "CNPJ"
+
+                StyledInput:
+                    id: nome
+                    hint_text: "Nome / Razão Social"
+
+                StyledInput:
+                    id: fantasia
+                    hint_text: "Nome Fantasia"
+
+                StyledInput:
+                    id: telefone
+                    hint_text: "Telefone"
+
+                StyledInput:
+                    id: whatsapp
+                    hint_text: "WhatsApp"
+
+                StyledInput:
+                    id: email
+                    hint_text: "E-mail"
+
+                StyledInput:
+                    id: contrato
+                    hint_text: "Tipo de Contrato (Mensal/Anual)"
+
+                StyledInput:
+                    id: pagamento
+                    hint_text: "Tipo de Pagamento"
+
+                StyledInput:
+                    id: valor
+                    hint_text: "Valor Mensalidade"
+
+                StyledInput:
+                    id: teamviewer
+                    hint_text: "ID TeamViewer"
+
+                StyledInput:
+                    id: senha_tv
+                    hint_text: "Senha TeamViewer"
+
+                StyledInput:
+                    id: anydesk
+                    hint_text: "ID AnyDesk"
+
+                StyledInput:
+                    id: senha_ad
+                    hint_text: "Senha AnyDesk"
+
+                StyledInput:
+                    id: obs
+                    hint_text: "Observações"
+
+        StyledButton:
+            text: "Salvar Cliente"
+            on_release: root.salvar_cliente()
+
+        StyledButton:
+            text: "Voltar"
+            background_color: 0.6,0.6,0.6,1
+            on_release: app.root.current = "home"
+
+
+<ListaScreen>:
+    GradientBackground:
+        orientation: "vertical"
+        padding: dp(16)
+        spacing: dp(8)
+
+        Label:
+            text: "Clientes Cadastrados"
+            font_size: dp(20)
+            color: 1, 1, 1, 1
+            size_hint_y: None
+            height: dp(40)
+
+        ScrollView:
+            GridLayout:
+                id: lista_clientes
+                cols: 1
+                size_hint_y: None
+                height: self.minimum_height
+                spacing: dp(8)
+
+        StyledButton:
+            text: "Voltar"
+            background_color: 0.6,0.6,0.6,1
+            on_release: app.root.current = "home"
+
+
+<ImportExportScreen>:
+    GradientBackground:
+        orientation: "vertical"
+        padding: dp(24)
+        spacing: dp(12)
+
+        Label:
+            text: "Exportar/Importar Clientes"
+            font_size: dp(20)
+            color: 1, 1, 1, 1
+            size_hint_y: None
+            height: dp(40)
+
+        StyledButton:
+            text: "Exportar para Excel"
+            on_release: root.exportar_excel()
+
+        StyledButton:
+            text: "Importar do Excel"
+            on_release: root.importar_excel()
+
+        StyledButton:
+            text: "Voltar"
+            background_color: 0.6,0.6,0.6,1
+            on_release: app.root.current = "home"
+
