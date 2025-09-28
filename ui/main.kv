@@ -1,0 +1,148 @@
+#:kivy 2.2.1
+
+ScreenManager:
+    LoginScreen:
+    HomeScreen:
+    CadastroScreen:
+    ListaScreen:
+    ImportExportScreen:
+
+# -------------------- LOGIN --------------------
+<LoginScreen>:
+    BoxLayout:
+        orientation: "vertical"
+        padding: 20
+        spacing: 15
+
+        Label:
+            text: "Login"
+            font_size: 28
+            size_hint_y: None
+            height: 60
+
+        TextInput:
+            id: email
+            hint_text: "Usuário"
+            multiline: False
+
+        TextInput:
+            id: password
+            hint_text: "Senha"
+            password: True
+            multiline: False
+
+        Label:
+            text: root.info
+            color: (1,0,0,1)
+
+        Button:
+            text: "Entrar"
+            size_hint_y: None
+            height: 50
+            on_release: root.do_login()
+
+# -------------------- HOME --------------------
+<HomeScreen>:
+    BoxLayout:
+        orientation: "vertical"
+        padding: 20
+        spacing: 10
+
+        Label:
+            text: "Menu Principal"
+            font_size: 26
+            size_hint_y: None
+            height: 60
+
+        Button:
+            text: "Cadastrar Cliente"
+            on_release: app.root.current = "cadastro"
+
+        Button:
+            text: "Lista de Clientes"
+            on_release: app.root.current = "lista"
+
+        Button:
+            text: "Importar/Exportar"
+            on_release: app.root.current = "import_export"
+
+        Button:
+            text: "Sair"
+            on_release: app.root.current = "login"
+
+# -------------------- CADASTRO --------------------
+<CadastroScreen>:
+    ScrollView:
+        BoxLayout:
+            orientation: "vertical"
+            size_hint_y: None
+            height: self.minimum_height
+            padding: 15
+            spacing: 10
+
+            TextInput: id: cnpj; hint_text: "CNPJ"
+            TextInput: id: nome; hint_text: "Nome / Razão Social"
+            TextInput: id: fantasia; hint_text: "Nome Fantasia"
+            TextInput: id: telefone; hint_text: "Telefone"
+            TextInput: id: whatsapp; hint_text: "WhatsApp"
+            TextInput: id: email; hint_text: "E-mail"
+            TextInput: id: contrato; hint_text: "Tipo de Contrato"
+            TextInput: id: pagamento; hint_text: "Tipo de Pagamento"
+            TextInput: id: valor; hint_text: "Mensalidade"
+            TextInput: id: teamviewer; hint_text: "ID TeamViewer"
+            TextInput: id: senha_tv; hint_text: "Senha TeamViewer"
+            TextInput: id: anydesk; hint_text: "ID AnyDesk"
+            TextInput: id: senha_ad; hint_text: "Senha AnyDesk"
+            TextInput: id: obs; hint_text: "Observações"
+            Button:
+                text: "Salvar Cliente"
+                size_hint_y: None
+                height: 50
+                on_release: root.salvar_cliente()
+
+# -------------------- LISTA --------------------
+<ListaScreen>:
+    BoxLayout:
+        orientation: "vertical"
+        padding: 10
+        spacing: 10
+
+        ScrollView:
+            GridLayout:
+                id: lista_clientes
+                cols: 1
+                size_hint_y: None
+                height: self.minimum_height
+                spacing: 5
+
+        Button:
+            text: "Voltar"
+            size_hint_y: None
+            height: 50
+            on_release: app.root.current = "home"
+
+# -------------------- IMPORT/EXPORT --------------------
+<ImportExportScreen>:
+    BoxLayout:
+        orientation: "vertical"
+        padding: 20
+        spacing: 15
+
+        Button:
+            text: "Exportar Clientes para Excel"
+            size_hint_y: None
+            height: 50
+            on_release: root.exportar_excel()
+
+        Button:
+            text: "Importar Clientes do Excel"
+            size_hint_y: None
+            height: 50
+            on_release: root.importar_excel()
+
+        Button:
+            text: "Voltar"
+            size_hint_y: None
+            height: 50
+            on_release: app.root.current = "home"
+
