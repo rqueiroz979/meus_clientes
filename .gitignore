@@ -1,0 +1,30 @@
+# Ambiente virtual Python
+.venv/
+venv/
+ENV/
+
+# Buildozer e compilações
+.buildozer/
+bin/
+*.apk
+*.aab
+
+# Arquivos temporários / cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.log
+*.db-journal
+*.sqlite3-journal
+
+# Arquivos do sistema
+.DS_Store
+Thumbs.db
+
+# Exportações (Excel ou outros gerados pelo app)
+*.xlsx
+
+# Configurações locais
+*.env
+
