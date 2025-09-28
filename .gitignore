@@ -1,47 +1,39 @@
-# --- Python ---
-__pycache__/
-*.py[cod]
-*.pyo
-*.pyd
-*.so
-
-# --- Virtual env ---
+# ===================================
+# Ignorar ambientes virtuais
+# ===================================
 .venv/
 env/
 venv/
 
-# --- Buildozer ---
+# ===================================
+# Ignorar cache do Python
+# ===================================
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# ===================================
+# Ignorar arquivos temporários
+# ===================================
+*.db
+*.sqlite
+*.xlsx
+*.log
+*.bak
+*.tmp
+
+# ===================================
+# Ignorar pastas de build do Kivy/Buildozer
+# ===================================
 .buildozer/
 bin/
 *.apk
 *.aab
 
-# --- Banco de dados ---
-*.db
-
-# --- Arquivos temporários ---
-*.log
-*.tmp
-*.swp
-*.swo
-*.bak
-
-# --- Cache ---
-*.cache/
-*.pytest_cache/
-*.mypy_cache/
-*.coverage
-.coverage.*
-
-# --- Excel export/import ---
-*.xlsx
-*.xls
-
-# --- IDEs ---
-.vscode/
-.idea/
-
-# --- Sistema ---
+# ===================================
+# Ignorar arquivos do sistema
+# ===================================
 .DS_Store
 Thumbs.db
 
