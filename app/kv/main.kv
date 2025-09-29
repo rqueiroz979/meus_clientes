@@ -1,148 +1,315 @@
-#:kivy 2.2.1
+#:import MDRectangleFlatButton kivymd.uix.button.MDRectangleFlatButton
+#:import Window kivy.core.window.Window
+#:import utils app.utils.helpers
 
-ScreenManager:
+<MainScreenManager@ScreenManager>:
     LoginScreen:
-    HomeScreen:
-    CadastroScreen:
+        name: "login"
     ListaScreen:
+        name: "lista"
+    CadastroScreen:
+        name: "cadastro"
     ImportExportScreen:
+        name: "import_export"
 
-# -------------------- LOGIN --------------------
-<LoginScreen>:
+<LoginScreen@BoxLayout>:
+    orientation: "vertical"
+    spacing: dp(12)
+    padding: dp(20)
+    canvas.before:
+        Color:
+            rgba: .96, .98, 1, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
     BoxLayout:
-        orientation: "vertical"
-        padding: 20
-        spacing: 15
+        size_hint_y: None
+        height: dp(120)
+        padding: dp(10)
+        Image:
+            source: "assets/logo.png" if root.parent and root.parent else "assets/logo.png"
+            allow_stretch: True
+            keep_ratio: True
 
+    Label:
+        text: "Bem-vindo"
+        font_size: "22sp"
+        size_hint_y: None
+        height: dp(30)
+        halign: "center"
+
+    TextInput:
+        id: email
+        hint_text: "Usuário"
+        size_hint_y: None
+        height: dp(48)
+        multiline: False
+
+    TextInput:
+        id: password
+        hint_text: "Senha"
+        password: True
+        size_hint_y: None
+        height: dp(48)
+        multiline: False
+
+    Label:
+        id: info
+        text: ""
+        color: (1,0,0,1)
+        size_hint_y: None
+        height: dp(24)
+
+    Button:
+        text: "Entrar"
+        size_hint_y: None
+        height: dp(46)
+        on_release:
+            root.do_login()
+
+    Widget:
+        size_hint_y: None
+        height: dp(20)
+
+<ListaScreen@BoxLayout>:
+    orientation: "vertical"
+    padding: dp(8)
+    spacing: dp(8)
+    BoxLayout:
+        size_hint_y: None
+        height: dp(56)
         Label:
-            text: "Login"
-            font_size: 28
+            text: "Meus Clientes"
+            font_size: "20sp"
+            bold: True
+        Button:
+            text: "Novo"
+            size_hint_x: None
+            width: dp(90)
+            on_release:
+                app.root.get_screen("cadastro").new_form(); app.root.current = "cadastro"
+        Button:
+            text: "Export/Import"
+            size_hint_x: None
+            width: dp(120)
+            on_release:
+                app.root.current = "import_export"
+
+    ScrollView:
+        GridLayout:
+            id: lista_clientes
+            cols: 1
             size_hint_y: None
-            height: 60
+            height: self.minimum_height
+            row_default_height: dp(56)
+            row_force_default: True
+            spacing: dp(6)
+            padding: dp(6)
+
+<CadastroScreen@ScrollView>:
+    do_scroll_x: False
+    GridLayout:
+        cols: 1
+        size_hint_y: None
+        height: self.minimum_height
+        padding: dp(12)
+        spacing: dp(8)
+
+        GridLayout:
+            cols: 2
+            size_hint_y: None
+            height: dp(48)
+            TextInput:
+                id: cnpj
+                hint_text: "CNPJ"
+                multiline: False
+            TextInput:
+                id: tipo_cliente
+                hint_text: "Tipo (Física/Jurídica/Exterior)"
+                multiline: False
+
+        TextInput:
+            id: razao_social
+            hint_text: "Razão Social / Nome (obrigatório)"
+            multiline: False
+            size_hint_y: None
+            height: dp(48)
+
+        TextInput:
+            id: nome_fantasia
+            hint_text: "Nome Fantasia (obrigatório)"
+            multiline: False
+            size_hint_y: None
+            height: dp(48)
+
+        GridLayout:
+            cols: 2
+            size_hint_y: None
+            height: dp(48)
+            TextInput:
+                id: inscricao_estadual
+                hint_text: "Inscrição Estadual"
+                multiline: False
+            TextInput:
+                id: inscricao_municipal
+                hint_text: "Inscrição Municipal"
+                multiline: False
+
+        GridLayout:
+            cols: 2
+            size_hint_y: None
+            height: dp(48)
+            TextInput:
+                id: cep
+                hint_text: "CEP"
+                multiline: False
+            TextInput:
+                id: endereco
+                hint_text: "Endereço"
+                multiline: False
+
+        GridLayout:
+            cols: 3
+            size_hint_y: None
+            height: dp(48)
+            TextInput:
+                id: numero
+                hint_text: "Número"
+                multiline: False
+            TextInput:
+                id: complemento
+                hint_text: "Complemento"
+                multiline: False
+            TextInput:
+                id: bairro
+                hint_text: "Bairro"
+                multiline: False
+
+        GridLayout:
+            cols: 3
+            size_hint_y: None
+            height: dp(48)
+            TextInput:
+                id: cidade
+                hint_text: "Cidade"
+                multiline: False
+            TextInput:
+                id: uf
+                hint_text: "UF"
+                multiline: False
+            TextInput:
+                id: telefone1
+                hint_text: "Telefone 1 (obrigatório)"
+                multiline: False
+
+        GridLayout:
+            cols: 2
+            size_hint_y: None
+            height: dp(48)
+            TextInput:
+                id: telefone2
+                hint_text: "Telefone 2"
+                multiline: False
+            BoxLayout:
+                spacing: dp(6)
+                TextInput:
+                    id: whatsapp
+                    hint_text: "WhatsApp (sem sinais, ex: 5511999998888)"
+                    multiline: False
+                Button:
+                    text: "Abrir"
+                    size_hint_x: None
+                    width: dp(80)
+                    on_release:
+                        app.abrir_whatsapp(whatsapp.text)
 
         TextInput:
             id: email
-            hint_text: "Usuário"
+            hint_text: "E-mail (obrigatório)"
             multiline: False
+            size_hint_y: None
+            height: dp(48)
 
-        TextInput:
-            id: password
-            hint_text: "Senha"
-            password: True
-            multiline: False
+        GridLayout:
+            cols: 3
+            size_hint_y: None
+            height: dp(48)
+            TextInput:
+                id: contrato
+                hint_text: "Tipo de contrato (Mensal/Anual/Sem)"
+                multiline: False
+            TextInput:
+                id: pagamento
+                hint_text: "Tipo de pagamento (Boleto/PIX/Transferência)"
+                multiline: False
+            TextInput:
+                id: valor_mensalidade
+                hint_text: "Valor da mensalidade"
+                multiline: False
 
         Label:
-            text: root.info
-            color: (1,0,0,1)
-
-        Button:
-            text: "Entrar"
+            text: "TeamViewer (até 6)"
             size_hint_y: None
-            height: 50
-            on_release: root.do_login()
-
-# -------------------- HOME --------------------
-<HomeScreen>:
-    BoxLayout:
-        orientation: "vertical"
-        padding: 20
-        spacing: 10
-
-        Label:
-            text: "Menu Principal"
-            font_size: 26
-            size_hint_y: None
-            height: 60
-
-        Button:
-            text: "Cadastrar Cliente"
-            on_release: app.root.current = "cadastro"
-
-        Button:
-            text: "Lista de Clientes"
-            on_release: app.root.current = "lista"
-
-        Button:
-            text: "Importar/Exportar"
-            on_release: app.root.current = "import_export"
-
-        Button:
-            text: "Sair"
-            on_release: app.root.current = "login"
-
-# -------------------- CADASTRO --------------------
-<CadastroScreen>:
-    ScrollView:
+            height: dp(22)
         BoxLayout:
+            id: tv_ids_container
             orientation: "vertical"
             size_hint_y: None
             height: self.minimum_height
-            padding: 15
-            spacing: 10
 
-            TextInput: id: cnpj; hint_text: "CNPJ"
-            TextInput: id: nome; hint_text: "Nome / Razão Social"
-            TextInput: id: fantasia; hint_text: "Nome Fantasia"
-            TextInput: id: telefone; hint_text: "Telefone"
-            TextInput: id: whatsapp; hint_text: "WhatsApp"
-            TextInput: id: email; hint_text: "E-mail"
-            TextInput: id: contrato; hint_text: "Tipo de Contrato"
-            TextInput: id: pagamento; hint_text: "Tipo de Pagamento"
-            TextInput: id: valor; hint_text: "Mensalidade"
-            TextInput: id: teamviewer; hint_text: "ID TeamViewer"
-            TextInput: id: senha_tv; hint_text: "Senha TeamViewer"
-            TextInput: id: anydesk; hint_text: "ID AnyDesk"
-            TextInput: id: senha_ad; hint_text: "Senha AnyDesk"
-            TextInput: id: obs; hint_text: "Observações"
+        Button:
+            text: "Adicionar TV ID"
+            size_hint_y: None
+            height: dp(44)
+            on_release: app.adicionar_tv()
+
+        Label:
+            text: "AnyDesk (até 6)"
+            size_hint_y: None
+            height: dp(22)
+        BoxLayout:
+            id: ad_ids_container
+            orientation: "vertical"
+            size_hint_y: None
+            height: self.minimum_height
+
+        Button:
+            text: "Adicionar AnyDesk ID"
+            size_hint_y: None
+            height: dp(44)
+            on_release: app.adicionar_ad()
+
+        TextInput:
+            id: observacoes
+            hint_text: "Observações"
+            size_hint_y: None
+            height: dp(120)
+
+        BoxLayout:
+            size_hint_y: None
+            height: dp(56)
             Button:
-                text: "Salvar Cliente"
-                size_hint_y: None
-                height: 50
+                text: "Salvar"
                 on_release: root.salvar_cliente()
+            Button:
+                text: "Cancelar"
+                on_release: app.root.current = "lista"
 
-# -------------------- LISTA --------------------
-<ListaScreen>:
+<ImportExportScreen@BoxLayout>:
+    orientation: "vertical"
+    padding: dp(12)
+    spacing: dp(8)
     BoxLayout:
-        orientation: "vertical"
-        padding: 10
-        spacing: 10
-
-        ScrollView:
-            GridLayout:
-                id: lista_clientes
-                cols: 1
-                size_hint_y: None
-                height: self.minimum_height
-                spacing: 5
-
+        size_hint_y: None
+        height: dp(56)
         Button:
-            text: "Voltar"
-            size_hint_y: None
-            height: 50
-            on_release: app.root.current = "home"
-
-# -------------------- IMPORT/EXPORT --------------------
-<ImportExportScreen>:
-    BoxLayout:
-        orientation: "vertical"
-        padding: 20
-        spacing: 15
-
+            text: "Exportar Excel"
+            on_release: root.exportar()
         Button:
-            text: "Exportar Clientes para Excel"
-            size_hint_y: None
-            height: 50
-            on_release: root.exportar_excel()
-
-        Button:
-            text: "Importar Clientes do Excel"
-            size_hint_y: None
-            height: 50
-            on_release: root.importar_excel()
-
-        Button:
-            text: "Voltar"
-            size_hint_y: None
-            height: 50
-            on_release: app.root.current = "home"
+            text: "Importar Excel"
+            on_release: root.importar()
+    Widget:
+        size_hint_y: None
+        height: dp(20)
 

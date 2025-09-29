@@ -1,24 +1,28 @@
-from kivy.uix.screenmanager import Screen
+# app/screens/lista_screen.py
+from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
-import sqlite3
+from app.database.db import Database
 
+db = Database()
 
-class ListaScreen(Screen):
+class ListaScreen(BoxLayout):
     def on_pre_enter(self):
         self.ids.lista_clientes.clear_widgets()
-
-        conn = sqlite3.connect("clientes.db")
-        cursor = conn.cursor()
-        cursor.execute("SELECT id, nome, telefone, whatsapp FROM clientes ORDER BY id DESC")
-        clientes = cursor.fetchall()
-        conn.close()
-
-        for cliente in clientes:
+        clientes = db.list_clientes()
+        for c in clientes:
             btn = Button(
-                text=f"{cliente[1]} | Tel: {cliente[2]} | Whats: {cliente[3]}",
-                size_hint_y=None,
-                height=40,
-                background_color=(0.2, 0.6, 0.8, 1)
+                text=f"{c.get('razao_social') or c.get('nome_fantasia')}  |  Tel: {c.get('telefone1') or ''}",
+                size_hint_y=None, height=56
             )
+            # attach cliente id to button and bind
+            btn.cliente_id = c["id"]
+            btn.bind(on_release=self.open_cliente)
             self.ids.lista_clientes.add_widget(btn)
 
+    def open_cliente(self, instance):
+        cid = getattr(instance, "cliente_id", None)
+        if cid is not None:
+            # muda para tela de cadastro com dados carregados (modo edição)
+            cadastro = self.parent.get_screen("cadastro")
+            cadastro.load_cliente(cid)
+            self.parent.current = "cadastro"
